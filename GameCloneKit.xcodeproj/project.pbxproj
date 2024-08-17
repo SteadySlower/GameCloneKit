@@ -6,10 +6,6 @@
 	objectVersion = 56;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		069677332C70C4030014BC3C /* GameCloneKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069677322C70C4030014BC3C /* GameCloneKit.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		0696772D2C70C4030014BC3C /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -24,7 +20,7 @@
 
 /* Begin PBXFileReference section */
 		0696772F2C70C4030014BC3C /* libGameCloneKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGameCloneKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		069677322C70C4030014BC3C /* GameCloneKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameCloneKit.swift; sourceTree = "<group>"; };
+		06D3B0E02C70C4850001B838 /* PuzzleKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PuzzleKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,7 +37,7 @@
 		069677262C70C4030014BC3C = {
 			isa = PBXGroup;
 			children = (
-				069677312C70C4030014BC3C /* GameCloneKit */,
+				06D3B0E02C70C4850001B838 /* PuzzleKit */,
 				069677302C70C4030014BC3C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,14 +48,6 @@
 				0696772F2C70C4030014BC3C /* libGameCloneKit.a */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		069677312C70C4030014BC3C /* GameCloneKit */ = {
-			isa = PBXGroup;
-			children = (
-				069677322C70C4030014BC3C /* GameCloneKit.swift */,
-			);
-			path = GameCloneKit;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,7 +108,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				069677332C70C4030014BC3C /* GameCloneKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
