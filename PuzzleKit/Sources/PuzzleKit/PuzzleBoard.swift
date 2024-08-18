@@ -24,6 +24,7 @@ struct PuzzleBoard: View {
     }()
     
     @State var selectedId: [Int] = []
+    @State var toDistroyId: [Int] = []
     
     let vGridColumns: [GridItem] = Array(repeating: GridItem(.fixed(30)), count: 10)
     
@@ -34,9 +35,10 @@ struct PuzzleBoard: View {
                 ForEach(colors, id: \.id) { entry in
                     PuzzleCell(
                         entry: entry,
-                        isSelected: selectedId.contains(entry.id)
+                        status: getCellStatus(entry.id)
                     )
                     .background { dragDetector(for: entry) }
+                    .id("\(entry) \(getCellStatus(entry.id))")
                 }
             }
             .border(.black)
@@ -49,6 +51,7 @@ struct PuzzleBoard: View {
                         // handle score
                         if selectedId.count > 2 {
                             self.score += selectedId.count
+                            self.toDistroyId.append(contentsOf: selectedId)
                         }
                         self.location = .zero
                         self.nowColor = nil
@@ -105,6 +108,20 @@ struct PuzzleBoard: View {
         
         return nexts
     }
+    
+    func getCellStatus(_ id: Int) -> CellStatus {
+        if selectedId.contains(id) {
+            return .selected
+        } else if toDistroyId.contains(id) {
+            return .distroyed
+        } else {
+            return .none
+        }
+    }
+}
+
+enum CellStatus {
+    case none, selected, distroyed
 }
 
 struct PuzzleCellEntry: Identifiable {
@@ -115,15 +132,25 @@ struct PuzzleCellEntry: Identifiable {
 private struct PuzzleCell: View {
     
     let entry: PuzzleCellEntry
-    let isSelected: Bool
+    let status: CellStatus
+    
+    @State var scale: CGFloat = 1.0
     
     var body: some View {
         entry.color
-            .opacity(isSelected ? 1 : 0.5)
+            .opacity(status == .selected ? 1 : 0.5)
             .frame(width: 30, height: 30)
             .overlay(
                 Text("\(entry.id)")
             )
+            .scaleEffect(scale)
+            .onAppear {
+                if status == .distroyed {
+                    withAnimation {
+                        scale = 0
+                    }
+                }
+            }
     }
     
 }
