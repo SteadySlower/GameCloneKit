@@ -11,20 +11,28 @@ struct PuzzleBoard: View {
     
     @State var location: CGPoint = .zero
     
-    let colors: [Color] = [.red, .blue, .green, .yellow]
-    @State var selectedColors: [Color] = []
+    let colors: [PuzzleCellEntry] = {
+        let allColors: [Color] = [.yellow, .purple, .blue, .green, .red]
+        var result = [PuzzleCellEntry]()
+        for i in 0..<100 {
+            result.append(.init(id: i, color: allColors.randomElement()!))
+        }
+        return result
+    }()
     
-    let vGridColumns: [GridItem] = [.init(.fixed(100)), .init(.fixed(100))]
+    @State var selectedId: [Int] = []
+    
+    let vGridColumns: [GridItem] = Array(repeating: GridItem(.fixed(30)), count: 10)
     
     var body: some View {
         VStack {
-            Text(location == .zero ? "Not Dragging" : "\(location)")
             LazyVGrid(columns: vGridColumns) {
-                ForEach(colors, id: \.self) { color in
-                    PuzzleCell(color: color, isSelected: selectedColors.contains(color))
-                        .background { dragDetector(for: color) }
+                ForEach(colors, id: \.id) { entry in
+                    PuzzleCell(entry: entry, isSelected: selectedId.contains(entry.id))
+                        .background { dragDetector(for: entry.id) }
                 }
             }
+            .border(.black)
             .gesture(
                 DragGesture(coordinateSpace: .global)
                     .onChanged { val in
@@ -37,31 +45,36 @@ struct PuzzleBoard: View {
         }
     }
     
-    private func dragDetector(for color: Color) -> some View {
+    private func dragDetector(for id: Int) -> some View {
         GeometryReader { proxy in
             let frame = proxy.frame(in: .global)
             let isDragLocationInsideFrame = frame.contains(location)
             Color.clear
                 .onChange(of: isDragLocationInsideFrame) { oldVal, newVal in
                     if newVal {
-                        self.selectedColors.append(color)
+                        self.selectedId.append(id)
                     } else {
-                        self.selectedColors = selectedColors.filter { $0 != color }
+                        self.selectedId = selectedId.filter { $0 != id }
                     }
                 }
         }
     }
 }
 
+struct PuzzleCellEntry: Identifiable {
+    let id: Int
+    let color: Color
+}
+
 private struct PuzzleCell: View {
     
-    let color: Color
+    let entry: PuzzleCellEntry
     let isSelected: Bool
     
     var body: some View {
-        color
+        entry.color
             .opacity(isSelected ? 1 : 0.5)
-            .frame(width: 100, height: 100)
+            .frame(width: 30, height: 30)
     }
     
 }
