@@ -11,6 +11,7 @@ struct PuzzleBoard: View {
     
     @State var location: CGPoint = .zero
     @State var nowColor: Color? = nil
+    @State var nextIdCandidate: [Int] = []
     
     let colors: [PuzzleCellEntry] = {
         let allColors: [Color] = [.yellow, .purple, .blue, .green, .red]
@@ -54,15 +55,46 @@ struct PuzzleBoard: View {
             let isDragLocationInsideFrame = frame.contains(location)
             Color.clear
                 .onChange(of: isDragLocationInsideFrame) { oldVal, newVal in
-                    guard newVal else { return }
+                    guard newVal && !selectedId.contains(entry.id) else { return }
                     if selectedId.isEmpty {
                         self.selectedId.append(entry.id)
                         self.nowColor = entry.color
-                    } else if nowColor == entry.color {
+                        self.nextIdCandidate = getPossibleNextId(for: entry.id)
+                    } else if nowColor == entry.color && nextIdCandidate.contains(entry.id) {
                         self.selectedId.append(entry.id)
+                        self.nextIdCandidate = getPossibleNextId(for: entry.id)
                     }
                 }
         }
+    }
+    
+    private func getPossibleNextId(for id: Int) -> [Int] {
+        let nexts = [
+            id - 11,
+            id - 10,
+            id - 9,
+            id - 1,
+            id + 1,
+            id + 9,
+            id + 10,
+            id + 11
+        ]
+        .filter { next in
+            (0..<100).contains(next)
+        }
+        .filter { next in
+            // if cell is on the left edge -> remove left side three cells
+            if id % 10 == 0 {
+                return ![id - 11, id - 1, id + 9].contains(next)
+            // if cell is on the right edge -> remove right side three cells
+            } else if id % 10 == 9 {
+                return ![id + 1, id + 11, id - 9].contains(next)
+            } else {
+                return true
+            }
+        }
+        
+        return nexts
     }
 }
 
@@ -80,6 +112,9 @@ private struct PuzzleCell: View {
         entry.color
             .opacity(isSelected ? 1 : 0.5)
             .frame(width: 30, height: 30)
+            .overlay(
+                Text("\(entry.id)")
+            )
     }
     
 }
