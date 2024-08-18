@@ -10,6 +10,7 @@ import SwiftUI
 struct PuzzleBoard: View {
     
     @State var location: CGPoint = .zero
+    @State var nowColor: Color? = nil
     
     let colors: [PuzzleCellEntry] = {
         let allColors: [Color] = [.yellow, .purple, .blue, .green, .red]
@@ -29,32 +30,36 @@ struct PuzzleBoard: View {
             LazyVGrid(columns: vGridColumns) {
                 ForEach(colors, id: \.id) { entry in
                     PuzzleCell(entry: entry, isSelected: selectedId.contains(entry.id))
-                        .background { dragDetector(for: entry.id) }
+                        .background { dragDetector(for: entry) }
                 }
             }
             .border(.black)
             .gesture(
-                DragGesture(coordinateSpace: .global)
+                DragGesture(minimumDistance: 0, coordinateSpace: .global)
                     .onChanged { val in
                         self.location = val.location
                     }
                     .onEnded { val in
                         self.location = .zero
+                        self.nowColor = nil
+                        self.selectedId = []
                     }
             )
         }
     }
     
-    private func dragDetector(for id: Int) -> some View {
+    private func dragDetector(for entry: PuzzleCellEntry) -> some View {
         GeometryReader { proxy in
             let frame = proxy.frame(in: .global)
             let isDragLocationInsideFrame = frame.contains(location)
             Color.clear
                 .onChange(of: isDragLocationInsideFrame) { oldVal, newVal in
-                    if newVal {
-                        self.selectedId.append(id)
-                    } else {
-                        self.selectedId = selectedId.filter { $0 != id }
+                    guard newVal else { return }
+                    if selectedId.isEmpty {
+                        self.selectedId.append(entry.id)
+                        self.nowColor = entry.color
+                    } else if nowColor == entry.color {
+                        self.selectedId.append(entry.id)
                     }
                 }
         }
