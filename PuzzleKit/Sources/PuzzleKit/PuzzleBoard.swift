@@ -12,6 +12,7 @@ struct PuzzleBoard: View {
     @State var location: CGPoint = .zero
     @State var nowColor: Color? = nil
     @State var nextIdCandidate: [Int] = []
+    @State var score: Int = 0
     
     let colors: [PuzzleCellEntry] = {
         let allColors: [Color] = [.yellow, .purple, .blue, .green, .red]
@@ -28,10 +29,14 @@ struct PuzzleBoard: View {
     
     var body: some View {
         VStack {
+            Text("Score: \(score)")
             LazyVGrid(columns: vGridColumns) {
                 ForEach(colors, id: \.id) { entry in
-                    PuzzleCell(entry: entry, isSelected: selectedId.contains(entry.id))
-                        .background { dragDetector(for: entry) }
+                    PuzzleCell(
+                        entry: entry,
+                        isSelected: selectedId.contains(entry.id)
+                    )
+                    .background { dragDetector(for: entry) }
                 }
             }
             .border(.black)
@@ -41,6 +46,10 @@ struct PuzzleBoard: View {
                         self.location = val.location
                     }
                     .onEnded { val in
+                        // handle score
+                        if selectedId.count > 2 {
+                            self.score += selectedId.count
+                        }
                         self.location = .zero
                         self.nowColor = nil
                         self.selectedId = []
