@@ -8,8 +8,26 @@
 import SwiftUI
 
 struct PuzzleBoard: View {
+    
+    @State var location: CGPoint = .zero
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text(location == .zero ? "Not Dragging" : "\(location)")
+            Rectangle()
+                .frame(width: 300, height: 300)
+                .foregroundColor(.white)
+                .border(.black)
+                .gesture(
+                    DragGesture(coordinateSpace: .global)
+                        .onChanged { val in
+                            self.location = val.location
+                        }
+                        .onEnded { val in
+                            self.location = .zero
+                        }
+                )
+        }
     }
 }
 
