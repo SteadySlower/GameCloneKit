@@ -40,7 +40,7 @@ struct PuzzleBoard: View {
                         status: getCellStatus(entry.id),
                         onDistoryFinished: { onDistoryFinished(entry.id) },
                         onCreatedFinished: {
-                            
+                            onCreateFinished(entry.id)
                         }
                     )
                     .background { dragDetector(for: entry) }
