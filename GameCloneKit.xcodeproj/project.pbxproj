@@ -11,6 +11,7 @@
 		06D3B0EA2C70C6D60001B838 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06D3B0E92C70C6D60001B838 /* ContentView.swift */; };
 		06D3B0EC2C70C6D70001B838 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06D3B0EB2C70C6D70001B838 /* Assets.xcassets */; };
 		06D3B0EF2C70C6D70001B838 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06D3B0EE2C70C6D70001B838 /* Preview Assets.xcassets */; };
+		06D3B0F52C70C94D0001B838 /* PuzzleKit in Frameworks */ = {isa = PBXBuildFile; productRef = 06D3B0F42C70C94D0001B838 /* PuzzleKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -47,6 +48,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06D3B0F52C70C94D0001B838 /* PuzzleKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +61,7 @@
 				06D3B0E02C70C4850001B838 /* PuzzleKit */,
 				06D3B0E62C70C6D60001B838 /* GameCloneApp */,
 				069677302C70C4030014BC3C /* Products */,
+				06D3B0F32C70C94D0001B838 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -88,6 +91,13 @@
 				06D3B0EE2C70C6D70001B838 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		06D3B0F32C70C94D0001B838 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,6 +133,9 @@
 			dependencies = (
 			);
 			name = GameCloneApp;
+			packageProductDependencies = (
+				06D3B0F42C70C94D0001B838 /* PuzzleKit */,
+			);
 			productName = GameCloneApp;
 			productReference = 06D3B0E52C70C6D60001B838 /* GameCloneApp.app */;
 			productType = "com.apple.product-type.application";
@@ -430,6 +443,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		06D3B0F42C70C94D0001B838 /* PuzzleKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PuzzleKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 069677272C70C4030014BC3C /* Project object */;
 }
