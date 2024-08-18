@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let allColors: [Color] = [.yellow, .purple, .blue, .green, .red]
+
 struct PuzzleBoard: View {
     
     @State var location: CGPoint = .zero
@@ -14,8 +16,7 @@ struct PuzzleBoard: View {
     @State var nextIdCandidate: [Int] = []
     @State var score: Int = 0
     
-    let colors: [PuzzleCellEntry] = {
-        let allColors: [Color] = [.yellow, .purple, .blue, .green, .red]
+    @State var colors: [PuzzleCellEntry] = {
         var result = [PuzzleCellEntry]()
         for i in 0..<100 {
             result.append(.init(id: i, color: allColors.randomElement()!))
@@ -25,6 +26,7 @@ struct PuzzleBoard: View {
     
     @State var selectedId: [Int] = []
     @State var toDistroyId: [Int] = []
+    @State var toCreateID: [Int] = []
     
     let vGridColumns: [GridItem] = Array(repeating: GridItem(.fixed(30)), count: 10)
     
@@ -35,7 +37,11 @@ struct PuzzleBoard: View {
                 ForEach(colors, id: \.id) { entry in
                     PuzzleCell(
                         entry: entry,
-                        status: getCellStatus(entry.id)
+                        status: getCellStatus(entry.id),
+                        onDistoryFinished: { onDistoryFinished(entry.id) },
+                        onCreatedFinished: {
+                            
+                        }
                     )
                     .background { dragDetector(for: entry) }
                     .id("\(entry) \(getCellStatus(entry.id))")
@@ -114,14 +120,26 @@ struct PuzzleBoard: View {
             return .selected
         } else if toDistroyId.contains(id) {
             return .distroyed
+        } else if toCreateID.contains(id) {
+            return .created
         } else {
             return .none
         }
     }
+    
+    func onDistoryFinished(_ id: Int) {
+        self.toDistroyId = toDistroyId.filter { $0 != id }
+        colors[id] = .init(id: id, color: allColors.randomElement()!)
+        self.toCreateID.append(id)
+    }
+    
+    func onCreateFinished(_ id: Int) {
+        self.toCreateID = toCreateID.filter { $0 != id }
+    }
 }
 
 enum CellStatus {
-    case none, selected, distroyed
+    case none, selected, created, distroyed
 }
 
 struct PuzzleCellEntry: Identifiable {
@@ -133,6 +151,8 @@ private struct PuzzleCell: View {
     
     let entry: PuzzleCellEntry
     let status: CellStatus
+    let onDistoryFinished: () -> Void
+    let onCreatedFinished: () -> Void
     
     @State var scale: CGFloat = 1.0
     
@@ -148,6 +168,15 @@ private struct PuzzleCell: View {
                 if status == .distroyed {
                     withAnimation {
                         scale = 0
+                    } completion: {
+                        onDistoryFinished()
+                    }
+                } else if status == .created {
+                    self.scale = 0
+                    withAnimation {
+                        scale = 1
+                    } completion: {
+                        onCreatedFinished()
                     }
                 }
             }
