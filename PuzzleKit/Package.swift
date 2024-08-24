@@ -10,7 +10,12 @@ let package = Package(
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "PuzzleKit",
-            targets: ["PuzzleKit"]),
+            targets: ["PuzzleKit"]
+        ),
+        .library(
+            name: "PianoKit",
+            targets: ["PianoKit"]
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -18,6 +23,10 @@ let package = Package(
         .target(
             name: "PuzzleKit",
             path: "Sources/PuzzleKit"
-        )
+        ),
+        .target(
+            name: "PianoKit",
+            path: "Sources/PianoKit"
+        ),
     ]
 )
