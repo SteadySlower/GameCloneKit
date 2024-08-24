@@ -15,20 +15,15 @@ public struct ScoreView: View {
         ZStack {
             ZStack(alignment: .leading) {
                 StaffView()
-                
                 HStack {
                     ClefView()
                     KeySignatureView(
                         keySignature: .flat,
-                        numberOfKeySignature: 2
+                        numberOfKeySignature: 0
                     )
+                    NoteView(note: .도)
                 }
             }
-
-            
-            // 음표 추가 (4분음표 예시)
-            NoteView()
-                .offset(x: 50, y: -30)
         }
         .frame(height: height)
     }
@@ -58,24 +53,6 @@ private struct ClefView: View {
 
 enum KeySignature {
     case sharp, flat
-    
-    var sign: String {
-        switch self {
-        case .sharp:
-            return "♯"
-        case .flat:
-            return "♭"
-        }
-    }
-    
-    var positionCoefficient: [CGFloat] {
-        switch self {
-        case .sharp:
-            return [-4, -1, -5, -2, 1, -3, 0]
-        case .flat:
-            return [0, -3, 1, -2, 2, -1, 3]
-        }
-    }
 }
 
 private struct KeySignatureView: View {
@@ -85,32 +62,61 @@ private struct KeySignatureView: View {
      플랫의 경우: 시-미-라-레-솔-도-파
      */
     
-    let keySignature: KeySignature
-    let numberOfKeySignature: Int
+    private let sign: String
+    private let numberOfKeySignature: Int
+    private let positionCoefficient: [CGFloat]
+    
+    init(keySignature: KeySignature, numberOfKeySignature: Int) {
+        self.sign = keySignature == .sharp ? "♯" : "♭"
+        self.numberOfKeySignature = numberOfKeySignature
+        self.positionCoefficient = keySignature == .sharp ? [-4, -1, -5, -2, 1, -3, 0] : [0, -3, 1, -2, 2, -1, 3]
+    }
     
     var body: some View {
         GeometryReader { proxy in
-            let gapBetweenSemitone = proxy.size.height / 9
+            let gapBetweenSemitone = proxy.size.height / 8
             HStack(spacing: -10) {
                 ForEach(0..<numberOfKeySignature, id: \.self) { i in
-                    Text(keySignature.sign)
+                    Text(sign)
                         .font(.system(size: 55))
                         .frame(maxHeight: .infinity)
                         .padding(.vertical, -15)
-                        .offset(y: gapBetweenSemitone * keySignature.positionCoefficient[i])
+                        .offset(y: gapBetweenSemitone * positionCoefficient[i])
                 }
             }
         }
+        .scaledToFit()
     }
 }
 
+enum Note: Int {
+    case 도 = 0, 레, 미, 파, 솔, 라, 시, 높도, 높레, 높미, 높파, 높솔, 높라, 높시
+}
+
 private struct NoteView: View {
+    
+    let note: Note
+    
     var body: some View {
-        VStack {
-            // 4분음표
-            Text("♪")
-                .font(.system(size: 50))
+        GeometryReader { proxy in
+            let size = proxy.size.height / 4
+            let gapBetweenSemitone = proxy.size.height / 8
+            ZStack {
+                Ellipse()
+                    .frame(width: size * 1.5, height: size, alignment: .center)
+                if note.rawValue < Note.레.rawValue || note.rawValue > Note.높솔.rawValue {
+                    Rectangle()
+                        .frame(width: size * 2.3, height: 1)
+                }
+            }
+            .offset(y: gapBetweenSemitone * positionCoefficient(of: note))
+            .padding(.trailing, proxy.size.width / 3)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         }
+    }
+    
+    private func positionCoefficient(of note: Note) -> CGFloat {
+        6 - CGFloat(note.rawValue)
     }
 }
 
