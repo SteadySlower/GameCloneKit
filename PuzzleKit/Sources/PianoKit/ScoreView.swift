@@ -45,7 +45,14 @@ private struct StaffView: View {
 
 private struct ClefView: View {
     var body: some View {
-        Image(uiImage: ImageRenderer(content: Text("𝄞").font(.largeTitle)).uiImage!)
+        Image(
+            uiImage: ImageRenderer(
+                content: Text("𝄞")
+                    .font(.largeTitle)
+                    .padding(.vertical, -6)
+                    .offset(y: -3)
+                ).uiImage!
+            )
             .resizable()
             .scaledToFit()
     }
