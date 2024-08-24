@@ -67,6 +67,8 @@ struct PuzzleBoard: View {
         }
     }
     
+    // TODO: 바로 직전으로 이동하면 취소되도록 한다
+    
     private func dragDetector(for entry: PuzzleCellEntry) -> some View {
         GeometryReader { proxy in
             let frame = proxy.frame(in: .global)
