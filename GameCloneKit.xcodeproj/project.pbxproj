@@ -12,6 +12,7 @@
 		06D3B0EC2C70C6D70001B838 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06D3B0EB2C70C6D70001B838 /* Assets.xcassets */; };
 		06D3B0EF2C70C6D70001B838 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06D3B0EE2C70C6D70001B838 /* Preview Assets.xcassets */; };
 		06D3B0F52C70C94D0001B838 /* PuzzleKit in Frameworks */ = {isa = PBXBuildFile; productRef = 06D3B0F42C70C94D0001B838 /* PuzzleKit */; };
+		06ECFD1E2C79BA5900DEE05D /* PianoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 06ECFD1D2C79BA5900DEE05D /* PianoKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,6 +50,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				06D3B0F52C70C94D0001B838 /* PuzzleKit in Frameworks */,
+				06ECFD1E2C79BA5900DEE05D /* PianoKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,6 +137,7 @@
 			name = GameCloneApp;
 			packageProductDependencies = (
 				06D3B0F42C70C94D0001B838 /* PuzzleKit */,
+				06ECFD1D2C79BA5900DEE05D /* PianoKit */,
 			);
 			productName = GameCloneApp;
 			productReference = 06D3B0E52C70C6D60001B838 /* GameCloneApp.app */;
@@ -448,6 +451,10 @@
 		06D3B0F42C70C94D0001B838 /* PuzzleKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PuzzleKit;
+		};
+		06ECFD1D2C79BA5900DEE05D /* PianoKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PianoKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
