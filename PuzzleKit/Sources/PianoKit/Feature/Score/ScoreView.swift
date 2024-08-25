@@ -13,7 +13,7 @@ struct ScoreView: View {
             ZStack(alignment: .leading) {
                 StaffView()
                 HStack {
-                    ClefView()
+                    ClefView(clef: .treble)
                     KeySignatureView(
                         keySignature: .flat,
                         numberOfKeySignature: 0

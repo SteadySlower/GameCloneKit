@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct ClefView: View {
+    
+    private let sign: String
+    
+    init(clef: Clef) {
+        self.sign = clef == .treble ? "𝄞" : "𝄢"
+    }
+    
+    // TODO: adjust clef size and position in the Staff
     var body: some View {
         Image(
             uiImage: ImageRenderer(
-                content: Text("𝄞")
+                content: Text(sign)
                     .font(.largeTitle)
                     .padding(.vertical, -6)
                     .offset(y: -3)
@@ -23,6 +31,10 @@ struct ClefView: View {
 }
 
 #Preview {
-    ClefView()
-        .frame(height: 100)
+    HStack {
+        ClefView(clef: .treble)
+        ClefView(clef: .bass)
+    }
+    .frame(height: 100)
+
 }
