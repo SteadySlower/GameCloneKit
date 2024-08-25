@@ -19,7 +19,7 @@ struct KeySignatureView: View {
     private let positionCoefficient: [CGFloat]
     
     init(keySignature: KeySignature, numberOfKeySignature: Int) {
-        self.sign = keySignature == .sharp ? "♯" : "♭"
+        self.sign = keySignature.sign
         self.numberOfKeySignature = numberOfKeySignature
         self.positionCoefficient = keySignature == .sharp ? [-4, -1, -5, -2, 1, -3, 0] : [0, -3, 1, -2, 2, -1, 3]
     }
