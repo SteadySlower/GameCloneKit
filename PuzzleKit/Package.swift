@@ -16,6 +16,10 @@ let package = Package(
             name: "PianoKit",
             targets: ["PianoKit"]
         ),
+        .library(
+            name: "PingPongKit",
+            targets: ["PingPongKit"]
+        ),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -27,6 +31,10 @@ let package = Package(
         .target(
             name: "PianoKit",
             path: "Sources/PianoKit"
+        ),
+        .target(
+            name: "PingPongKit",
+            path: "Sources/PingPongKit"
         ),
     ]
 )

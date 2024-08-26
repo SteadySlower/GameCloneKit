@@ -12,6 +12,7 @@
 		06D3B0EC2C70C6D70001B838 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06D3B0EB2C70C6D70001B838 /* Assets.xcassets */; };
 		06D3B0EF2C70C6D70001B838 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 06D3B0EE2C70C6D70001B838 /* Preview Assets.xcassets */; };
 		06D3B0F52C70C94D0001B838 /* PuzzleKit in Frameworks */ = {isa = PBXBuildFile; productRef = 06D3B0F42C70C94D0001B838 /* PuzzleKit */; };
+		06E0A1B12C7CC240004F590B /* PingPongKit in Frameworks */ = {isa = PBXBuildFile; productRef = 06E0A1B02C7CC240004F590B /* PingPongKit */; };
 		06ECFD1E2C79BA5900DEE05D /* PianoKit in Frameworks */ = {isa = PBXBuildFile; productRef = 06ECFD1D2C79BA5900DEE05D /* PianoKit */; };
 /* End PBXBuildFile section */
 
@@ -51,6 +52,7 @@
 			files = (
 				06D3B0F52C70C94D0001B838 /* PuzzleKit in Frameworks */,
 				06ECFD1E2C79BA5900DEE05D /* PianoKit in Frameworks */,
+				06E0A1B12C7CC240004F590B /* PingPongKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +140,7 @@
 			packageProductDependencies = (
 				06D3B0F42C70C94D0001B838 /* PuzzleKit */,
 				06ECFD1D2C79BA5900DEE05D /* PianoKit */,
+				06E0A1B02C7CC240004F590B /* PingPongKit */,
 			);
 			productName = GameCloneApp;
 			productReference = 06D3B0E52C70C6D60001B838 /* GameCloneApp.app */;
@@ -451,6 +454,10 @@
 		06D3B0F42C70C94D0001B838 /* PuzzleKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = PuzzleKit;
+		};
+		06E0A1B02C7CC240004F590B /* PingPongKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PingPongKit;
 		};
 		06ECFD1D2C79BA5900DEE05D /* PianoKit */ = {
 			isa = XCSwiftPackageProductDependency;
