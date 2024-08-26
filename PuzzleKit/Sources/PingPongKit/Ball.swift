@@ -16,20 +16,25 @@ struct HalfCircleAnimationView: View {
     @State private var isReverse: Bool = false
 
     var body: some View {
-        ZStack {
-            // 반원 경로 그리기
-            HalfCirclePath()
-                .stroke(Color.gray, lineWidth: 2)
-                .frame(width: 200, height: 100) // 반원 크기 설정
+        VStack {
+            ZStack {
+                // 반원 경로 그리기
+                HalfCirclePath()
+                    .stroke(Color.gray, lineWidth: 2)
+                    .frame(width: 200, height: 100) // 반원 크기 설정
 
-            // 반원 경로를 따라 움직이는 Circle
-            Circle()
-                .fill(Color.blue)
-                .frame(width: 20, height: 20)
-                .offset(
-                    x: 100 * cos(Angle.degrees(degree).radians),
-                    y: -100 * sin(Angle.degrees(degree).radians)
-                )
+                // 반원 경로를 따라 움직이는 Circle
+                Circle()
+                    .fill(Color.blue)
+                    .frame(width: 20, height: 20)
+                    .offset(
+                        x: 100 * cos(Angle.degrees(degree).radians),
+                        y: -100 * sin(Angle.degrees(degree).radians)
+                    )
+            }
+            Button("반대로") {
+                isReverse.toggle()
+            }
         }
         .onAppear { startAnimation() }
     }
