@@ -18,10 +18,18 @@ struct HalfCircleAnimationView: View {
     var body: some View {
         VStack {
             ZStack {
-                // 반원 경로 그리기
-                HalfCirclePath()
-                    .stroke(Color.gray, lineWidth: 2)
-                    .frame(width: 200, height: 100) // 반원 크기 설정
+                HStack(spacing: 0) {
+                    QuarterCirclePath(isLeft: true)
+                        .stroke(Color.gray, lineWidth: 2)
+                        .frame(width: 200, height: 100)
+                    HalfCirclePath()
+                        .stroke(Color.gray, lineWidth: 2)
+                        .frame(width: 200, height: 100)
+                    QuarterCirclePath(isLeft: false)
+                        .stroke(Color.gray, lineWidth: 2)
+                        .frame(width: 200, height: 100)
+                }
+
 
                 // 반원 경로를 따라 움직이는 Circle
                 Circle()
@@ -58,6 +66,27 @@ struct HalfCirclePath: Shape {
                     radius: rect.width / 2,
                     startAngle: .degrees(180),
                     endAngle: .degrees(0),
+                    clockwise: false)
+        return path
+    }
+}
+
+struct QuarterCirclePath: Shape {
+    
+    let startAngle: CGFloat
+    let endAngle: CGFloat
+    
+    init(isLeft: Bool) {
+        self.startAngle = isLeft ? -90 : 180
+        self.endAngle = isLeft ? 0 : -90
+    }
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addArc(center: CGPoint(x: rect.midX, y: rect.midY),
+                    radius: rect.width / 2,
+                    startAngle: .degrees(startAngle),
+                    endAngle: .degrees(endAngle),
                     clockwise: false)
         return path
     }
