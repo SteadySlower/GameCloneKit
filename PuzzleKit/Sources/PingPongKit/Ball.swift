@@ -16,32 +16,36 @@ struct HalfCircleAnimationView: View {
     @State private var isReverse: Bool = false
 
     var body: some View {
-        VStack {
-            ZStack {
-                HStack(spacing: 0) {
-                    QuarterCirclePath(isLeft: true)
-                        .stroke(Color.gray, lineWidth: 2)
-                        .frame(width: 200, height: 100)
-                    HalfCirclePath()
-                        .stroke(Color.gray, lineWidth: 2)
-                        .frame(width: 200, height: 100)
-                    QuarterCirclePath(isLeft: false)
-                        .stroke(Color.gray, lineWidth: 2)
-                        .frame(width: 200, height: 100)
+        GeometryReader { proxy in
+            let height = proxy.size.height
+            let width = height * 2
+            VStack {
+                ZStack {
+                    HStack(spacing: 0) {
+                        QuarterCirclePath(isLeft: true)
+                            .stroke(Color.gray, lineWidth: 2)
+                            .frame(width: width, height: height)
+                        HalfCirclePath()
+                            .stroke(Color.gray, lineWidth: 2)
+                            .frame(width: width, height: height)
+                        QuarterCirclePath(isLeft: false)
+                            .stroke(Color.gray, lineWidth: 2)
+                            .frame(width: width, height: height)
+                    }
+
+
+                    // 반원 경로를 따라 움직이는 Circle
+                    Circle()
+                        .fill(Color.blue)
+                        .frame(width: 20, height: 20)
+                        .offset(
+                            x: height * cos(Angle.degrees(degree).radians),
+                            y: -height * sin(Angle.degrees(degree).radians)
+                        )
                 }
-
-
-                // 반원 경로를 따라 움직이는 Circle
-                Circle()
-                    .fill(Color.blue)
-                    .frame(width: 20, height: 20)
-                    .offset(
-                        x: 100 * cos(Angle.degrees(degree).radians),
-                        y: -100 * sin(Angle.degrees(degree).radians)
-                    )
-            }
-            Button("반대로") {
-                isReverse.toggle()
+                Button("반대로") {
+                    isReverse.toggle()
+                }
             }
         }
         .onAppear { startAnimation() }
@@ -94,4 +98,5 @@ struct QuarterCirclePath: Shape {
 
 #Preview {
     HalfCircleAnimationView()
+        .frame(height: 50)
 }
