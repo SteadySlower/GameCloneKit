@@ -10,11 +10,15 @@ import Combine
 
 struct HalfCircleAnimationView: View {
     
-    @State var degree: Double = 0
+    @State var xOffset: CGFloat = 0
+    @State var yOffset: CGFloat = 0
 
     @State private var isReverse: Bool = false
     
     private let ballSize: CGFloat = 20
+    
+    let timer = Timer.publish(every: 0.01, on: .main, in: .common).autoconnect()
+    @State var subscription: AnyCancellable?
 
     var body: some View {
         GeometryReader { proxy in
@@ -43,13 +47,36 @@ struct HalfCircleAnimationView: View {
                             x: -ballSize / 2,
                             y: -ballSize / 2
                         )
+                        .offset(
+                            x: xOffset,
+                            y: 0
+                        )
                 }
                 Button("반대로") {
                     isReverse.toggle()
                 }
             }
             .frame(maxWidth: .infinity)
+            .onAppear {
+                startAnimation(height)
+            }
         }
+        .padding(.top, ballSize / 2)
+    }
+    
+    func startAnimation(_ height: CGFloat) {
+        self.subscription = timer.sink(receiveValue: { _ in
+            let amount = height / 10
+            self.xOffset += !isReverse ? amount : -amount
+            switch xOffset {
+            case (0..<height):
+                self.yOffset = 
+            }
+            
+            if xOffset == 0 || xOffset == height * 4 {
+                isReverse.toggle()
+            }
+        })
     }
 }
 
